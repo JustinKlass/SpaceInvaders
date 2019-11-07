@@ -6,6 +6,7 @@ let drops = [];
 let flowers = [];
 let backgroundImage;
 
+
 function preload() {
 
   shipImage = loadImage('./img/ship.png');
@@ -25,7 +26,13 @@ function setup() {
 }
 
 function draw() {
+
     background(backgroundImage, 90);
+
+    textSize(30);
+    fill(255, 255, 255);
+    text('Score: ' + score, width / 2.5, 30)
+
     ship.show();
     ship.move();
 
@@ -67,13 +74,11 @@ function draw() {
 
     for (let i = flowers.length - 1; i >= 0; i--) {   //Start looping through Array backwards so that it doesn't skipp backwards
         if (flowers[i].demo) {
-            scoreH1.empty()
             score = score + 100;
-            scoreH1.append(score);
             flowers.splice(i, 1);
         }
     }
-
+    
 }
 
 // function mousePressed() {

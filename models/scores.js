@@ -10,9 +10,7 @@ const scoreSchema = new Schema(
    {timestamps: true}
    );
 
-  
-
-const product = mongoose.model('score', scoreSchema);
+const scores = mongoose.model('score', scoreSchema);
 
 //make this exportable to be accessed in `app.js`
 module.exports = scores;

@@ -16,22 +16,22 @@ function preload() {
 
 function setup() {
 
-    createCanvas(1250, 625);
+    createCanvas(1260, 625);
     ship = new Ship();
 
     for (let i = 0; i < 8; i++) {
-        flowers[i] = new Flower(i * 115 + 115, 60);
+        flowers[i] = new Flower(i * 125, 50);
     }
 
 }
 
 function draw() {
 
-    background(backgroundImage, 90);
+    background(backgroundImage, 255);
 
     textSize(30);
     fill(255, 255, 255);
-    text('Score: ' + score, width / 2.5, 30)
+    text('Score: ' + score, width / 2.25, 30)
 
     ship.show();
     ship.move();

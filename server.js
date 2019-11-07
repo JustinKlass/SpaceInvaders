@@ -1,16 +1,16 @@
 const express = require('express');
 const app = express();
-const port = 5500;
+const port = 3000;
 const mongoose =  require('mongoose');
 const methodOverride = require('method-override');
-// const productsController = require('./controllers/products.js');
+const scoresController = require('./controllers/scores.js');
 
 
 // MIDDLEWARE
 app.use(express.urlencoded({ extended:true }));
 app.use(express.static('public'));
 app.use(methodOverride('_method'));
-// app.use('/products', productsController);
+app.use('/', scoresController);
 
 // DB SETUP
 mongoose.connect('mongodb://localhost:27017/basiccrud', { useNewUrlParser: true });

@@ -1,5 +1,5 @@
 function Ship() {
-    this.x = width / 2;
+    this.x = width / 2.25;
     this.xdir = 0;
     // let im = loadImage('./img/sprites.png');
 
@@ -16,6 +16,6 @@ function Ship() {
     }
 
     this.move = function(dir) {
-        this.x += this.xdir * 5; //Moves 1 pixel 5 times
+        this.x += this.xdir * 5; // Moves 1 pixel 5 times
     }
 }

@@ -5,9 +5,8 @@ function Drop(x, y) {
     this.demo = false;
 
     this.show = function() {
-        noStroke();
-        fill('#ffff00');
-        ellipse(this.x, this.y, this.rad * 2, this.rad * 2); //POS X, POS Y, WIDTH, LENGTH
+        fill('#22CC02');
+        rect(this.x, this.y, this.rad / 2, this.rad * 2); //POS X, POS Y, WIDTH, LENGTH
     }
 
     this.destroy = function() {

@@ -3,21 +3,27 @@ function Flower(x, y) {
     this.y = y;
     this.rad = 30;
     this.demo = false;
-    this.xPos = 1;
-    this.yPos = 1;
+    this.xdir = 1;
 
     this.destroy = function() {
         this.demo = true;
 
     }
 
+    this.shiftDown = function() {
+        this.xdir *= -1;
+        this.y += this.rad;
+    }
+
     this.move = function() {
-        this.x = this.x + this xPos;
-        this.y = this.y + this yPos;
+        this.x = this.x + this.xdir * 4;
+
     }
 
     this.show = function() {
-        fill(0, 0, 255);
-        ellipse(this.x, this.y, this.rad * 2, this.rad * 2); //POS X, POS Y, WIDTH, LENGTH
+        // noStroke();
+        // fill(0, 0, 255);
+        image(alienImage, this.x, this.y, 100, 50);
+        // ellipse(this.x, this.y, this.rad * 2, this.rad * 2); //POS X, POS Y, WIDTH, LENGTH
     }
 }

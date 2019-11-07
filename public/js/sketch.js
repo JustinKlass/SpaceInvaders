@@ -21,14 +21,13 @@ function setup() {
     for (let i = 0; i < 8; i++) {
         flowers[i] = new Flower(i * 115 + 115, 60);
     }
+
 }
 
 function draw() {
     background(backgroundImage, 90);
     ship.show();
     ship.move();
-
-    
 
     for (let i = 0; i < drops.length; i++) {
 
@@ -68,9 +67,9 @@ function draw() {
 
     for (let i = flowers.length - 1; i >= 0; i--) {   //Start looping through Array backwards so that it doesn't skipp backwards
         if (flowers[i].demo) {
+            scoreH1.empty()
             score = score + 100;
-            textSize(16);
-            text(score, 50, 30)
+            scoreH1.append(score);
             flowers.splice(i, 1);
         }
     }

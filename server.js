@@ -20,9 +20,9 @@ app.use(methodOverride('_method'));
 
 app.use('/play', scoresController);
 
-app.use('/', (req, res) => {
-    res.redirect('/play');
-})
+// app.use('/', (req, res) => {
+//     res.redirect('/play');
+// })
 
 
 app.listen(port, () => {

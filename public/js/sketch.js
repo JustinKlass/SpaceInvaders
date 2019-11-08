@@ -25,6 +25,9 @@ function setup() {
     for (let i = 0; i < 8; i++) {
         flowers[i] = new Flower(i * 125, 50);
     }
+    for (let i = 0; i < 8; i++) {
+        flowers[i] = new Flower(i * 125, 50);
+    }
 
 }
 

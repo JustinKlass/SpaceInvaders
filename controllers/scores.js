@@ -5,10 +5,23 @@ const Scores = require('../models/scores.js')
 router.use(express.static('public'));
 
 
-
-// // INDEX
+// PLAY
 router.get('/play', (req, res) => {
     res.render('play.ejs');
+});
+
+
+// INDEX
+router.get('/scores', (req, res) => {
+    Scores.find({}, (error, scores) => {
+        if (error) {
+            res.send(error)
+        } else {
+            res.render('index.ejs', {
+            scores
+            });
+        }
+    });
 });
 
 

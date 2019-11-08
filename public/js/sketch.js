@@ -7,6 +7,7 @@ let flowers = [];
 let backgroundImage;
 
 
+
 function preload() {
 
   shipImage = loadImage('./img/ship.png');
@@ -26,6 +27,7 @@ function setup() {
 }
 
 function draw() {
+    
 
     background(backgroundImage, 255);
 
@@ -78,7 +80,7 @@ function draw() {
             flowers.splice(i, 1);
         }
     }
-    
+
 }
 
 // function mousePressed() {
@@ -109,4 +111,3 @@ function keyReleased() {
     ship.setDir(0);
     }
 }
- 

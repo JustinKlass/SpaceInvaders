@@ -17,8 +17,8 @@ router.get('/scores', (req, res) => {
         if (error) {
             res.send(error)
         } else {
-            res.render('index.ejs', {
-            scores
+            res.render('scores.ejs', {
+            scores,
             });
         }
     });
@@ -26,13 +26,13 @@ router.get('/scores', (req, res) => {
 
 
 // NEW
-router.get('/new', (req, res) => {
+router.get('/scores/new', (req, res) => {
     res.render('new.ejs')
 })
 
 
 // SHOW
-router.get('/:id', (req, res) => {
+router.get('/scores/:id', (req, res) => {
     Scores.findById(req.params.id, (error, scores) => {
         if (error) {
             res.send(error)
@@ -47,7 +47,7 @@ router.get('/:id', (req, res) => {
 
 
 // EDIT
-router.get('/:id/edit', (req, res)=>{
+router.get('/scores/:id/edit', (req, res)=>{
     Scores.findById(req.params.id, (error, scores) => {
         if (error) {
             console.log(error)
@@ -62,24 +62,24 @@ router.get('/:id/edit', (req, res)=>{
 
 
 // CREATE
-router.post('/', (req, res) => {
+router.post('/scores', (req, res) => {
     Scores.create(req.body, (error, scores) => {
         if (error) {
             res.send(error)
         } else {
-            res.redirect('/');
+            res.redirect('/scores');
         }
     });
 });
 
 
 // UPDATE
-router.put('/:id', (req, res)=>{
+router.put('/scores/:id', (req, res)=>{
     Scores.findByIdAndUpdate(req.params.id, req.body, { new: true }, (error, scores)=>{
         if (error) {
             console.log(error)
         } else {
-            res.redirect('/');
+            res.redirect('/scores');
         }
     });
 });

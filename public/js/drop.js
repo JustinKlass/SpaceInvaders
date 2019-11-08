@@ -1,3 +1,5 @@
+console.log('drop is running');
+
 function Drop(x, y) {
     this.x = x;
     this.y = y;

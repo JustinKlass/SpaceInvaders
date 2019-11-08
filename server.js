@@ -19,7 +19,7 @@ app.use(express.static('public'));
 app.use(methodOverride('_method'));
 
 // controller
-app.use('/play', scoresController);
+app.use(scoresController);
 
 app.get('/', (req, res) => {
     res.redirect('/play');

@@ -1,3 +1,5 @@
+console.log('ship is running');
+
 function Ship() {
     this.x = width / 2.25;
     this.xdir = 0;

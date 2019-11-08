@@ -1,3 +1,5 @@
+console.log('sketch is running');
+
 let ship;
 let score = 0;
 let shipImage;
@@ -10,9 +12,9 @@ let backgroundImage;
 
 function preload() {
 
-  shipImage = loadImage('./img/ship.png');
-  alienImage = loadImage('./img/alien1.png');
-  backgroundImage = loadImage('./img/space.png');
+  shipImage = loadImage('../img/ship.png');
+  alienImage = loadImage('../img/alien1.png');
+  backgroundImage = loadImage('../img/space.png');
 }
 
 function setup() {

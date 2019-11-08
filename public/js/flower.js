@@ -1,3 +1,5 @@
+console.log('flower is running');
+
 function Flower(x, y) {
     this.x = x;
     this.y = y;

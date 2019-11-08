@@ -86,7 +86,7 @@ router.put('/scores/:id', (req, res)=>{
 
 
 // DELETE
-router.delete('/:id', (req, res)=>{
+router.delete('/scores/:id', (req, res)=>{
     // add delete logic using mongoose
     Scores.findByIdAndRemove(req.params.id, (error, scores) => {
         if (error) {

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport", initial-scale=1.0>
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="/css/game.css">
+    <link rel="stylesheet" href="../css/game.css">
     <title>Edit</title>
 </head>
 <body>
@@ -15,5 +15,9 @@
         <input type = "submit" name = "" value = "Enter"/>
     </form>
     <a href="/play"><button>Back</button></a>
+
+    <form action="/scores/<%= scores.id; %>?_method=DELETE" method="POST">
+        <input type="submit" value="DELETE"/>
+    </form>
 </body>
 </html>

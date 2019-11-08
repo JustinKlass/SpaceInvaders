@@ -6,6 +6,7 @@ let shipImage;
 let alienImage;
 let drops = [];
 let flowers = [];
+let flowers2 = [];
 let backgroundImage;
 
 
@@ -25,10 +26,6 @@ function setup() {
     for (let i = 0; i < 8; i++) {
         flowers[i] = new Flower(i * 125, 50);
     }
-    for (let i = 0; i < 8; i++) {
-        flowers[i] = new Flower(i * 125, 50);
-    }
-
 }
 
 function draw() {

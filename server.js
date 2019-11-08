@@ -19,9 +19,6 @@ mongoose.connection.once('open', () => {
     console.log('connected to mongo');
 });
 
-app.use('/', (req, res) => {
-    res.redirect('/play');
-});
 
 
 app.listen(port, () => {

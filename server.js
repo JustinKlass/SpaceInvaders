@@ -6,6 +6,12 @@ const methodOverride = require('method-override');
 const scoresController = require('./controllers/scores.js');
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/basiccrud'
 
+// DB SETUP
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
+mongoose.connection.once('open', () => {
+    console.log('connected to mongo');
+});
+
 
 // MIDDLEWARE
 app.use(express.urlencoded({ extended:true }));
@@ -17,12 +23,6 @@ app.use('/play', scoresController);
 app.use('/', (req, res) => {
     res.redirect('/play');
 })
-
-// DB SETUP
-mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
-mongoose.connection.once('open', () => {
-    console.log('connected to mongo');
-});
 
 
 app.listen(port, () => {

@@ -1,9 +1,10 @@
 const express = require('express');
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 const mongoose =  require('mongoose');
 const methodOverride = require('method-override');
 const scoresController = require('./controllers/scores.js');
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/basiccrud'
 
 
 // MIDDLEWARE
@@ -13,7 +14,7 @@ app.use(methodOverride('_method'));
 app.use('/', scoresController);
 
 // DB SETUP
-mongoose.connect('mongodb://localhost:27017/basiccrud', { useNewUrlParser: true });
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 mongoose.connection.once('open', () => {
     console.log('connected to mongo');
 });

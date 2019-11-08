@@ -1,4 +1,13 @@
+@font-face {
+    font-family: "Space";
+    src: url("../fonts/spaceInvaders.ttf");
+
+    font-family: "BIT";
+    src: url("../fonts/8bitMadness.ttf");
+}
+
 body {
+    font-family: BIT;
     background-color: #e3e3a2;
 }
 
@@ -8,4 +17,26 @@ body {
 
 .block {
     display: block;
+}
+
+.center {
+    margin: 0;
+    padding: 0;
+    font-size: 2em; 
+    text-align: center;
+    list-style-type: none;
+}
+
+.playButton {
+    /* margin-top: 5%; */
+    margin-left: 45%;
+}
+
+#scoreNum {
+    margin-left: 1.5em;
+}
+
+.lonk {
+   text-decoration: none; 
+   color: black;
 }

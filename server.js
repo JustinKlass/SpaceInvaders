@@ -1,10 +1,10 @@
 const express = require('express');
 const app = express();
-const port = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 const mongoose =  require('mongoose');
 const methodOverride = require('method-override');
 const scoresController = require('./controllers/scores.js');
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/basiccrud'
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/basiccrud';
 
 // DB SETUP
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
@@ -18,6 +18,7 @@ app.use(express.urlencoded({ extended:true }));
 app.use(express.static('public'));
 app.use(methodOverride('_method'));
 
+// controller
 app.use('/play', scoresController);
 
 // app.use('/', (req, res) => {
@@ -25,6 +26,6 @@ app.use('/play', scoresController);
 // })
 
 
-app.listen(port, () => {
+app.listen(PORT, () => {
     console.log('Shaun is a big smelly willy');
 });

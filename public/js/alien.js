@@ -1,6 +1,7 @@
-console.log('flower is running');
+console.log('Alien is running');
 
-function Flower(x, y) {
+function Alien(x, y) {
+
     this.x = x;
     this.y = y;
     this.rad = 50;

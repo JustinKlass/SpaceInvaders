@@ -4,11 +4,10 @@ let ship;
 let score = 0;
 let shipImage;
 let alienImage;
-let drops = [];
-let flowers = [];
-let flowers2 = [];
+let pews = [];
+let aliens = [];
+let aliens2 = [];
 let backgroundImage;
-
 
 
 function preload() {
@@ -23,13 +22,22 @@ function setup() {
     createCanvas(1260, 625);
     ship = new Ship();
 
+
+    // ALIEN SET 1
     for (let i = 0; i < 8; i++) {
-        flowers[i] = new Flower(i * 125, 50);
+        aliens[i] = new Alien(i * 125, 50);
+    }
+
+    // ALIEN SET 2
+    for (let i = 0; i < 8; i++) {
+        aliens2[i] = new Alien(i * 125, 110);
     }
 }
 
 function draw() {
     
+    let edge = false;
+    let rowTwoEdge = false;
 
     background(backgroundImage, 255);
 
@@ -40,46 +48,93 @@ function draw() {
     ship.show();
     ship.move();
 
-    for (let i = 0; i < drops.length; i++) {
 
-        drops[i].show();
-        drops[i].move();
+    // HIT DETECTION
+    for (let i = 0; i < pews.length; i++) {
 
-        for (let j = 0; j < flowers.length; j++) {
-            if (drops[i].hits(flowers[j])) {
-                flowers[j].destroy();
-                drops[i].destroy();
+        pews[i].show();
+        pews[i].move();
+
+        for (let j = 0; j < aliens.length; j++) {
+            if (pews[i].hits(aliens[j])) {
+                aliens[j].destroy();
+                pews[i].destroy();
+            }
+        }
+
+        for (let j = 0; j < aliens2.length; j++) {
+            if (pews[i].hits(aliens2[j])) {
+                aliens2[j].destroy();
+                pews[i].destroy();
             }
         }
     }
 
-    let edge = false;
 
-    for (let i = 0; i < flowers.length; i++) {
-        flowers[i].show();
-        flowers[i].move();
+    // ALIEN SET 1 MOVE AND SHOW
+    for (let i = 0; i < aliens.length; i++) {
+        aliens[i].show();
+        aliens[i].move();
 
-        if (flowers[i].x >= width || flowers[i].x <= 0) {
+        if (aliens[i].x >= width || aliens[i].x <= 0) {
             edge = true;
         }
     }
 
-    if (edge) {
-        for (let i = 0; i < flowers.length; i++) {
-            flowers[i].shiftDown();
-        }
-    }
-
-    for (let i = drops.length - 1; i >= 0; i--) {   //Start looping through Array backwards so that it doesn't skipp backwards
-        if (drops[i].demo) {
-            drops.splice(i, 1);
-        }
-    }
-
-    for (let i = flowers.length - 1; i >= 0; i--) {   //Start looping through Array backwards so that it doesn't skipp backwards
-        if (flowers[i].demo) {
+    // ALIEN SET 1 SCORE AND HIT DETECTION
+    for (let i = aliens.length - 1; i >= 0; i--) {   //Start looping through Array backwards so that it doesn't skip backwards
+        if (aliens[i].demo) {
             score = score + 100;
-            flowers.splice(i, 1);
+            aliens.splice(i, 1);
+        }
+    }
+
+
+
+
+
+
+
+
+
+    // ALIEN SET 2 MOVE AND SHOW
+    for (let i = 0; i < aliens2.length; i++) {
+        aliens2[i].show();
+        aliens2[i].move();
+
+        if (aliens2[i].x >= width || aliens2[i].x <= 0) {
+            edge = true;
+        }
+    }
+
+    // ALIEN SET 2 SCORE AND HIT DETECTION
+    for (let i = aliens2.length - 1; i >= 0; i--) {   //Start looping through Array backwards so that it doesn't skip backwards
+        if (aliens2[i].demo) {
+            score = score + 100;
+            aliens2.splice(i, 1);
+        }
+    }
+
+    if (edge === true) {
+        for (let i = 0; i < aliens.length; i++) {
+            aliens[i].shiftDown();
+        }
+        for (let i = 0; i < aliens2.length; i++) {
+            aliens2[i].shiftDown();
+        }
+    }
+
+
+
+
+
+
+
+
+    // PEW PEW HIT DETECTION
+    for (let i = pews.length - 1; i >= 0; i--) {   //Start looping through Array backwards so that it doesn't skipp backwards
+        if (pews[i].demo) {
+            pews.splice(i, 1);
         }
     }
 
@@ -95,8 +150,8 @@ function draw() {
 function keyPressed() {
 
     if (keyCode === 32 || keyCode === 38 || keyCode === 87) { // SPACEBAR / UP / W
-        let drop = new Drop(ship.x + 61, height - 70);
-        drops.push(drop);
+        let pew = new Pew(ship.x + 61, height - 70);
+        pews.push(pew);
     }
     
 

@@ -1,6 +1,6 @@
-console.log('drop is running');
+console.log('Pew is running');
 
-function Drop(x, y) {
+function Pew(x, y) {
     this.x = x;
     this.y = y;
     this.rad = 8;
@@ -16,9 +16,9 @@ function Drop(x, y) {
 
     }
 
-    this.hits = function(flower) {
-        var d = dist(this.x, this.y, flower.x, flower.y);
-        if (d < this.rad + flower.rad) {
+    this.hits = function(alien) {
+        var d = dist(this.x, this.y, alien.x, alien.y);
+        if (d < this.rad + alien.rad) {
             return true;
         }
         else {

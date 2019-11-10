@@ -17,8 +17,8 @@ function Pew(x, y) {
     }
 
     this.hits = function(alien) {
-        var d = dist(this.x, this.y, alien.x, alien.y);
-        if (d < this.rad + alien.rad) {
+        let distance = dist(this.x, this.y, alien.x + 40, alien.y);
+        if (distance < alien.rad + this.rad) {
             return true;
         }
         else {

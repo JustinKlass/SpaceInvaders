@@ -4,9 +4,9 @@ function Alien(x, y) {
 
     this.x = x;
     this.y = y;
+    this.xdir = 1;
     this.rad = 50;
     this.demo = false;
-    this.xdir = 1;
     
 
     this.destroy = function() {
@@ -29,6 +29,6 @@ function Alien(x, y) {
         // fill(0, 0, 255);
         image(alienImage, this.x, this.y, 75, 50);
         
-        // ellipse(this.x, this.y, this.rad * 2, this.rad * 2); //POS X, POS Y, WIDTH, LENGTH
+        // rect(this.x, this.y, this.rad, this.rad); //POS X, POS Y, WIDTH, LENGTH
     }
 }

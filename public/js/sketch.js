@@ -7,55 +7,13 @@ let aliens = [];
 let aliens2 = [];  
 let aliensArray = [];
 
-
-// const hitDetection = () => {
-
-//     pews.forEach((pew) => {
-
-//         pew.show();
-//         pew.move();
-
-//         aliensArray.forEach((array) => {
-//             array.forEach((alien) => {
-//                 if (pew.hits(alien)) {
-//                     alien.destroy();
-//                     pew.destroy();
-//                 }
-//             });
-//         });
-
-
-        
-
-//         // for (let j = 0; j < aliens.length; j++) {
-//             // if (pews[i].hits(aliens[j])) {
-//             //     aliens[j].destroy();
-//             //     pews[i].destroy();
-//             // }
-//         // }
-
-//         // for (let j = 0; j < aliens2.length; j++) {
-//         //     if (pews[i].hits(aliens2[j])) {
-//         //         aliens2[j].destroy();
-//         //         pews[i].destroy();
-//         //     }
-//         // }
-//     });
-// };
-
-// function preload() {
-
-//     logoImage = loadImage('../img/logo.png');
-//     shipImage = loadImage('../img/ship.png');
-//     alienImage = loadImage('../img/alien1.png');
-//     backgroundImage = loadImage('../img/space.png');
-// }
-
-
 let menu = function(menu) {
 
-    menu.x = 0;
-    menu.y = 0;
+    const playGame = () => {
+        menu.remove();
+        new p5(game);
+
+    };
 
     menu.preload = function() {
         logoImage = menu.loadImage('../img/logo.png');
@@ -64,9 +22,10 @@ let menu = function(menu) {
     }
 
     menu.setup = function() {
-        menu.createCanvas(1263, 625);
+        menu.createCanvas(1263, 620);
         link = menu.createA('/scores', 'Scores');
         button = menu.createButton('Play');
+        button.mousePressed(playGame);
     }
 
     menu.draw = function() {
@@ -78,8 +37,6 @@ let menu = function(menu) {
 
         button.id('spacePlayButton');
         button.position(menu.width/ 2.175, menu.height / 1.75);
-        button.mousePressed(function() {
-        });
         menu.image(logoImage, menu.width / 3.35, 50, 500, 200);
 
     }
@@ -93,6 +50,7 @@ let game = function(game) {
 
         this.x = game.width / 2.25;
         this.y = game.height - 60;
+        this.rad = 25;
         this.xdir = 0;
     
         this.show = function() {
@@ -105,9 +63,20 @@ let game = function(game) {
             this.xdir = dir;
         }
     
-        this.move = function(dir) {
+        this.move = function() {
             this.x += this.xdir * 5; // Moves 1 pixel 5 times
         }
+
+        this.hits = function(alien) {
+            let distance = game.dist(this.x, this.y, alien.x, alien.y);
+            if (distance < alien.rad + this.rad) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+
     }
 
     let Pew = function(x, y) {
@@ -134,7 +103,6 @@ let game = function(game) {
             else {
                 return false;
             }
-    
         }
     
         this.move = function() {
@@ -162,22 +130,22 @@ let game = function(game) {
         }
     
         this.move = function() {
-            this.x = this.x + this.xdir * 4;
-     
+            this.x = this.x + this.xdir * 3;
         }
     
         this.show = function() {
             // noStroke();
             // fill(0, 0, 255);
-            game.image(alienImage, this.x, this.y, 125, 75);
+            game.image(alienImage, this.x, this.y, 60, 35);
             
             // rect(this.x, this.y, this.rad, this.rad); //POS X, POS Y, WIDTH, LENGTH
         }
+
     }
 
     const setupAlienRow = (alienRowName, y) => {
 
-        for (let i = 0; i < 11; i++) {
+        for (let i = 0; i < 12; i++) {
             alienRowName[i] = new Alien(i * 90, y);
         }
     
@@ -193,14 +161,12 @@ let game = function(game) {
     
         });
     
-    
-        //START LOOPING THROUGH ARRAY BACKWARDS SO THAT IT DOESN'T SKIP BACKWARDS
-        for (let i = alienRowName.length - 1; i >= 0; i--) {  
-            if (alienRowName[i].demo) {
+        alienRowName.forEach((alien) => {
+            if (alien.demo) {
                 score = score + 100;
-                alienRowName.splice(i, 1);
+                alienRowName.splice(alienRowName.indexOf(alien), 1);
             }
-        }
+        })
     };
 
     const shift = (aliensArray) => {
@@ -209,18 +175,19 @@ let game = function(game) {
         //     alien.shiftDown();
         // });
     
-        aliensArray.forEach((alien) => {
-            alien.forEach((i) => {
-                i.shiftDown();
+        aliensArray.forEach((row) => {
+            row.forEach((alien) => {
+                alien.shiftDown();
             });
         });
     
     
     };
 
-    x = 0;
-    y = 0;
-
+    const enterScore = () => {
+        game.remove();
+        new p5(enter);
+    };
 
     game.preload = function() {
 
@@ -232,7 +199,7 @@ let game = function(game) {
 
     game.setup = function() {
         
-        game.createCanvas(1263, 625);
+        game.createCanvas(1263, 620);
         ship = new Ship();
 
         setupAlienRow(aliens, 50);
@@ -244,8 +211,6 @@ let game = function(game) {
 
         game.background(backgroundImage, 255);
 
-        let edge = false;
-
         game.textSize(30);
         game.fill(255, 255, 255);
         game.text('Score: ' + score, game.width / 2.25, 30)
@@ -256,28 +221,17 @@ let game = function(game) {
         ship.show();
         ship.move();
 
+        let edge = false;
 
-        for (let i = 0; i < aliens.length; i++) {
-            if (aliens[i].x >= game.width - 70 || aliens[i].x <= 0) {
-                edge = true;
-            }
-    }
-
-        for (let i = 0; i < aliens2.length; i++) {
-            if (aliens2[i].x >= game.width - 70 || aliens2[i].x <= 0) {
-                edge = true;
-            }
-        }
+        aliensArray.forEach((row) => {
+            row.forEach((alien) => {
+                if (alien.x >= game.width - 70 || alien.x <= 0) {
+                    edge = true;
+                }
+            });
+        });
 
         if (edge === true) {
-            // for (let i = 0; i < aliens.length; i++) {
-            //     aliens[i].shiftDown();
-            //     shift(aliensArray);
-            // }
-            // for (let i = 0; i < aliens2.length; i++) {
-            //     aliens2[i].shiftDown();
-            //     shift(aliensArray);
-            // }
             shift(aliensArray);
         }
 
@@ -287,8 +241,9 @@ let game = function(game) {
             pew.show();
             pew.move();
 
-            aliensArray.forEach((array) => {
-                array.forEach((alien) => {
+            // SETS DEMO TO TRUE
+            aliensArray.forEach((row) => {
+                row.forEach((alien) => {
                     if (pew.hits(alien)) {
                         alien.destroy();
                         pew.destroy();
@@ -297,12 +252,38 @@ let game = function(game) {
             });
         });
 
-        // PEW PEW HIT DETECTION
+        // REMOVES PEW PEW FROM PEW PEW ARRAY
         for (let i = pews.length - 1; i >= 0; i--) {   //Start looping through Array backwards so that it doesn't skipp backwards
             if (pews[i].demo) {
                 pews.splice(i, 1);
             }
         }
+
+        // REMOVES ROW FROM ALIENSARRAY
+        aliensArray.forEach((row) => {
+            if (row.length === 0) {
+                aliensArray.splice(aliensArray.indexOf(row), 1);    
+            }
+        });
+
+        // GAME WIN LOGIC
+        if (aliensArray.length === 0) {
+            enterScore();
+        }
+
+        // GAME LOSS LOGIC
+        aliensArray.forEach((row) => {
+            row.forEach((alien) => {
+                if (alien.y >= game.height - 20) {
+                    enterScore();
+                }
+                if (ship.hits(alien)) {
+                    enterScore();
+                }
+            });
+        });
+
+    }
 
 //         // function mousePressed() {
 //         //     if (mouseX > 0 && mouseX < 100 && mouseY > 0 && mouseY < 100) {
@@ -310,7 +291,6 @@ let game = function(game) {
 //         //     fullscreen(!fs);
 //         //     }
 //         // }
-    }
 
     game.keyPressed = function() {
 
@@ -331,150 +311,23 @@ let game = function(game) {
         if (game.key != ' ' && game.keyCode != 38 && game.keyCode != 87) { // SPACEBAR / UP / W
         ship.setDir(0);
         }
-    }
-        
+    }      
 
  }
 
+let enterScore = function(score) {
+
+ }
+ new p5(menu);
 
 
-let play = true;
+// ADD: BUTTON TO SWITCH BETWEEN SCREENS
+// ADD: LOGIC TO LOSE
+// ADD: SUBMIT NEW WITH SCORE ATTACHED
+// ADD: CSS
 
 
-if (play === false) {
-    let goMenu = new p5(menu);
-}
+// EXTRAS
 
-else if (play === true) {
-    let goGame = new p5(game);
-}
-
-
-
-// function setup() {
-
-//     createCanvas(1263, 625);
-
-//     if (play === false) {
-//         link = createA('/scores', 'Scores');
-//         button = createButton('Play');
-//     }
-
-//     else if (play === true) {
-        // createCanvas(1263, 625);
-        // ship = new Ship();
-
-        // setupAlienRow(aliens, 50);
-        // setupAlienRow(aliens2, 110);
-//     }
-
-// }
-
-// function draw() {
-
-//     background(backgroundImage, 255);
-
-//     if (play === false) {
-
-//         link.addClass('button');
-//         link.id('spaceScoreButton');
-//         link.position(width / 2.255, height / 1.5);
-
-//         button.id('spacePlayButton');
-//         button.position(width/ 2.175, height / 1.75);
-//         button.mousePressed(function() {
-//             redraw();
-//         });
-//         image(logoImage, width / 3.35, 50, 500, 200);
-//     }
-
-//     // else if (play === true) {
-
-//         // let edge = false;
-
-//         // textSize(30);
-//         // fill(255, 255, 255);
-//         // text('Score: ' + score, width / 2.25, 30)
-
-//         // ship.show();
-//         // ship.move();
-
-//         // makeAlienRow(aliens);
-//         // makeAlienRow(aliens2);    
-
-//         // for (let i = 0; i < aliens.length; i++) {
-//         //     if (aliens[i].x >= width - 70 || aliens[i].x <= 0) {
-//         //         edge = true;
-//         //     }
-//         // }
-
-//         // for (let i = 0; i < aliens2.length; i++) {
-//         //     if (aliens2[i].x >= width - 70 || aliens2[i].x <= 0) {
-//         //         edge = true;
-//         //     }
-//         // }
-
-//         // if (edge === true) {
-//         //     // for (let i = 0; i < aliens.length; i++) {
-//         //     //     aliens[i].shiftDown();
-//         //     //     shift(aliensArray);
-//         //     // }
-//         //     // for (let i = 0; i < aliens2.length; i++) {
-//         //     //     aliens2[i].shiftDown();
-//         //     //     shift(aliensArray);
-//         //     // }
-//         //     shift(aliensArray)
-//         // }
-
-//         // // HIT DETECTION
-//         // pews.forEach((pew) => {
-
-//         //     pew.show();
-//         //     pew.move();
-
-//         //     aliensArray.forEach((array) => {
-//         //         array.forEach((alien) => {
-//         //             if (pew.hits(alien)) {
-//         //                 alien.destroy();
-//         //                 pew.destroy();
-//         //             }
-//         //         });
-//         //     });
-//         // });
-
-//         // // PEW PEW HIT DETECTION
-//         // for (let i = pews.length - 1; i >= 0; i--) {   //Start looping through Array backwards so that it doesn't skipp backwards
-//         //     if (pews[i].demo) {
-//         //         pews.splice(i, 1);
-//         //     }
-//         // }
-
-//         // function mousePressed() {
-//         //     if (mouseX > 0 && mouseX < 100 && mouseY > 0 && mouseY < 100) {
-//         //     let fs = fullscreen();
-//         //     fullscreen(!fs);
-//         //     }
-//         // }
-
-//         // function keyPressed() {
-
-//         //     if (keyCode === 32 || keyCode === 38 || keyCode === 87) { // SPACEBAR / UP / W
-//         //         let pew = new Pew(ship.x + 61, height - 70);
-//         //         pews.push(pew);
-//         //     }
-
-//         //     if (keyCode === 39 || keyCode === 68) {  // RIGHT / D
-//         //         ship.setDir(1);
-//         //     } 
-//         //     if (keyCode === 37 || keyCode === 65) {   // LEFT / A
-//         //         ship.setDir(-1);
-//         //     }
-//         // }
-
-//         // function keyReleased() {
-//         //     if (key != ' ' && keyCode != 38 && keyCode != 87) { // SPACEBAR / UP / W
-//         //     ship.setDir(0);
-//         //     }
-//         // }
-//     // }
-// }
+// ADD: CUSTOM COLOR FOR PEWS OR SHIPS
+// ADD: MUSIC

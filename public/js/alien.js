@@ -7,7 +7,7 @@ function Alien(x, y) {
     this.xdir = 1;
     this.rad = 50;
     this.demo = false;
-    
+   
 
     this.destroy = function() {
         this.demo = true;
@@ -27,7 +27,8 @@ function Alien(x, y) {
     this.show = function() {
         // noStroke();
         // fill(0, 0, 255);
-        image(alienImage, this.x, this.y, 75, 50);
+        
+        image(alienImage, this.x, this.y, 125, 75);
         
         // rect(this.x, this.y, this.rad, this.rad); //POS X, POS Y, WIDTH, LENGTH
     }

@@ -1,15 +1,14 @@
 console.log('ship is running');
 
 function Ship() {
-    this.x = width / 2.25;
+
+    this.x = game.width / 2.25;
+    this.y = game.height - 60;
     this.xdir = 0;
-    // let im = loadImage('./img/sprites.png');
 
     this.show = function() {
-        // fill(220);
-        image(shipImage, this.x, height - 60, 125, 75);
-        // rectMode(CENTER); //Draws rect from center
-        // rect(this.x, height - 20, 20, 60); //POS X, POS Y, WIDTH, LENGTH
+
+        image(shipImage, this.x, this.y, 125, 75);
 
     }
 

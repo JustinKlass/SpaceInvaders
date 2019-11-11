@@ -8,7 +8,8 @@
 
 body {
     font-family: BIT;
-    background-color: #e3e3a2;
+    background-color: #FFDF00;
+    /* background-color: #e3e3a2; */
 }
 
 .inlineBlock {
@@ -39,4 +40,17 @@ body {
 .lonk {
    text-decoration: none; 
    color: black;
+}
+
+
+/* START OF CSS FOR PLAY.JS */
+
+
+#spacePlayButton, #spaceScoreButton  {
+    color: white;
+}
+
+#spaceScoreButton:hover, #spacePlayButton:hover {
+    color: #727EBD;
+    border-color: #888;
 }

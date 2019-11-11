@@ -21,6 +21,7 @@ app.use(methodOverride('_method'));
 // controller
 app.use(scoresController);
 
+
 app.get('/', (req, res) => {
     res.redirect('/play');
 })

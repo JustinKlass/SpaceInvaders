@@ -21,7 +21,7 @@ router.get('/scores', (req, res) => {
             scores,
             });
         }
-    }).sort({score: 'descending'}).limit(6);
+    }).sort({score: 'descending'}).limit(5);
 });
 
 

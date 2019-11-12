@@ -145,7 +145,7 @@ let game = (game) => {
         }
     
         this.move = function() {
-            this.x = this.x + this.xdir * 3.5;
+            this.x = this.x + this.xdir * 3;
         }
     
         this.show = function() {

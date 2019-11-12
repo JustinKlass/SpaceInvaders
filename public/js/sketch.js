@@ -219,7 +219,7 @@ let game = (game) => {
 
     game.setup = () => {
         
-        audio = game.createAudio('./audio/countdown.mp3');
+        audio = game.createAudio('../audio/countdown.mp3');
         audio.autoplay(true);
 
         game.createCanvas(1263, 620);

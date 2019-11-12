@@ -13,7 +13,7 @@ router.get('/play', (req, res) => {
 
 // INDEX
 router.get('/scores', (req, res) => {
-    Scores.find({}, {'_id': 0},{sort: {'score': -1}}, (error, scores) => {
+    Scores.find({}, (error, scores) => {
         if (error) {
             res.send(error)
         } else {
@@ -21,7 +21,7 @@ router.get('/scores', (req, res) => {
             scores,
             });
         }
-    });
+    }).sort({score: 'descending'}).limit(6);
 });
 
 

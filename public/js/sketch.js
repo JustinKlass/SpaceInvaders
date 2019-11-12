@@ -1,8 +1,7 @@
 console.log('sketch is running');
 
+let audio;
 let score = 0;  
-let inpu = '';
-
 let loss = false;
 
 let pews = [];
@@ -32,11 +31,14 @@ let menu = (menu) => {
 
         menu.createCanvas(1263, 620);
         link = menu.createA('/scores', 'Scores');
+
         button = menu.createButton('Play');
         button.mousePressed(playGame);
+
     }
 
     menu.draw = () => {
+
         menu.background(backgroundImage, 255);
     
         link.addClass('button');
@@ -66,7 +68,7 @@ let game = (game) => {
         this.show = function() {
     
             game.image(shipImage, this.x, this.y, 125, 75);
-    
+
         }
     
         this.setDir= function(dir) {
@@ -143,7 +145,7 @@ let game = (game) => {
         }
     
         this.move = function() {
-            this.x = this.x + this.xdir * 4;
+            this.x = this.x + this.xdir * 3.5;
         }
     
         this.show = function() {
@@ -200,6 +202,7 @@ let game = (game) => {
     };
 
     const lose = () => {
+        // audio.autoplay(false);
         game.remove();
         new p5(enterScore);
     };
@@ -216,7 +219,11 @@ let game = (game) => {
 
     game.setup = () => {
         
+        audio = game.createAudio('audio/countdown.mp3');
+        audio.autoplay(true);
+
         game.createCanvas(1263, 620);
+
         ship = new Ship();
         shipArray.push(ship);
 

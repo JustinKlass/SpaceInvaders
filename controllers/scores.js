@@ -13,7 +13,7 @@ router.get('/play', (req, res) => {
 
 // INDEX
 router.get('/scores', (req, res) => {
-    Scores.find({}, (error, scores) => {
+    Scores.find({}, {'_id': 0},{sort: {'score': -1}}, (error, scores) => {
         if (error) {
             res.send(error)
         } else {
@@ -28,21 +28,6 @@ router.get('/scores', (req, res) => {
 // NEW
 router.get('/scores/new', (req, res) => {
     res.render('new.ejs')
-})
-
-
-// SHOW
-router.get('/scores/:id', (req, res) => {
-    Scores.findById(req.params.id, (error, scores) => {
-        if (error) {
-            res.send(error)
-        } else {
-            res.render('show.ejs', {
-            scores,
-            id: req.params.id
-            });
-        }
-    });
 });
 
 
@@ -93,9 +78,10 @@ router.delete('/scores/:id', (req, res)=>{
             console.log(error)
         } else {
             //redirect back to fruits index
-            res.redirect('/');
+            res.redirect('/scores');
         }
     });
 });
+
 
 module.exports = router;

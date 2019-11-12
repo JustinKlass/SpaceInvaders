@@ -4,17 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" type = "text/css" href="/css/game.css">
+    <link rel="stylesheet" type = "text/css" href="../css/game.css">
+    <link rel="stylesheet" type = "text/css" href="../css/skeleton.css">
     <title>New Score</title>
 </head>
 <body>
-    <form action="/scores" method="POST">
-        Name: <input type="text" name="name" maxlength = "3"/>
-        <br/>
-        Score: <input type="number" name="score"/>
-        <input type="submit" name="" value="Enter"/>
-    </form>
-    <a href="/play"><button>Play</button></a>
-    <a href="/scores"><button>Scores</button></a>
+    <div class = 'center black'>
+        <h1>New Score</h1>
+        <form action="/scores" method="POST">
+            Name: <input type="text" name="name" maxlength = "3" id = 'form'/>
+            <br/>
+            Score: <input type="number" name="score" id = 'form'/>
+            <br/>
+            <input type="submit" name="" value="Enter" id = 'input'/>
+        </form>
+        <a href="/play"><button class = 'back'>Play</button></a>
+        <a href="/scores"><button class = 'back'>Scores</button></a>
+    </div>
 </body>
 </html>

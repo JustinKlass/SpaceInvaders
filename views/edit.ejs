@@ -4,20 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport", initial-scale=1.0>
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="../css/game.css">
-    <title>Edit</title>
+    <link rel="stylesheet" type = "text/css" href="/css/game.css">
+    <link rel="stylesheet" type = "text/css" href="/css/skeleton.css">
+    <title>Edit Score</title>
 </head>
 <body>
-    <form action="/scores/<%= id %>?_method=PUT" method="POST">
-        Name: <input type = "text" name = "name" maxlength = "3" value = "<%= scores.name %>"/>
-        <br/>
-        Score: <input type = "number" name = "score" value = "<%= scores.score %>"/>
-        <input type = "submit" name = "" value = "Enter"/>
-    </form>
-    <a href="/play"><button>Back</button></a>
+    <div class = 'black center'>
+        <h1>Edit Score</h1>
+        <form action="/scores/<%= id %>?_method=PUT" method="POST">
+                Name: <input type = "text" name = "name" maxlength = "3" value = "<%= scores.name %>" id = 'form'/>
+                <br/>
+                Score: <input type = "number" name = "score" value = "<%= scores.score %>" id = 'form'/>
+                <br/>
+                <input type = "submit" name = "" value = "Update" id = 'input'/>
+        </form>
 
-    <form action="/scores/<%= scores.id; %>?_method=DELETE" method="POST">
-        <input type="submit" value="DELETE"/>
-    </form>
+        <form action="/scores/<%= scores.id; %>?_method=DELETE" method="POST">
+            <input type="submit" value="DELETE" id = 'delete'/>
+        </form>
+
+
+        <a href="/play"><button class = 'back'>Play</button></a>
+
+
+
+    </div>
 </body>
 </html>

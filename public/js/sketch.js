@@ -1,13 +1,19 @@
 console.log('sketch is running');
 
 let score = 0;  
+let inpu = '';
+
+let loss = false;
 
 let pews = [];
 let aliens = [];
-let aliens2 = [];  
+let aliens2 = [];
+let aliens3 = [];
+let aliens4 = [];
+let shipArray = [];
 let aliensArray = [];
 
-let menu = function(menu) {
+let menu = (menu) => {
 
     const playGame = () => {
         menu.remove();
@@ -15,20 +21,22 @@ let menu = function(menu) {
 
     };
 
-    menu.preload = function() {
+    menu.preload = () => {
+
         logoImage = menu.loadImage('../img/logo.png');
         backgroundImage = menu.loadImage('../img/space.png');
 
     }
 
-    menu.setup = function() {
+    menu.setup = () => {
+
         menu.createCanvas(1263, 620);
         link = menu.createA('/scores', 'Scores');
         button = menu.createButton('Play');
         button.mousePressed(playGame);
     }
 
-    menu.draw = function() {
+    menu.draw = () => {
         menu.background(backgroundImage, 255);
     
         link.addClass('button');
@@ -43,8 +51,9 @@ let menu = function(menu) {
 
 }
 
+let game = (game) => {
 
-let game = function(game) {
+    // CONSTRUCTORS
 
     let Ship = function() {
 
@@ -52,6 +61,7 @@ let game = function(game) {
         this.y = game.height - 60;
         this.rad = 25;
         this.xdir = 0;
+        this.demo = false;
     
         this.show = function() {
     
@@ -63,6 +73,10 @@ let game = function(game) {
             this.xdir = dir;
         }
     
+        this.destroy = function() {
+            this.demo = true;
+        }
+
         this.move = function() {
             this.x += this.xdir * 5; // Moves 1 pixel 5 times
         }
@@ -92,7 +106,6 @@ let game = function(game) {
     
         this.destroy = function() {
             this.demo = true;
-    
         }
     
         this.hits = function(alien) {
@@ -130,7 +143,7 @@ let game = function(game) {
         }
     
         this.move = function() {
-            this.x = this.x + this.xdir * 3;
+            this.x = this.x + this.xdir * 4;
         }
     
         this.show = function() {
@@ -142,6 +155,8 @@ let game = function(game) {
         }
 
     }
+
+    // FUNCTIONS
 
     const setupAlienRow = (alienRowName, y) => {
 
@@ -184,12 +199,14 @@ let game = function(game) {
     
     };
 
-    const enterScore = () => {
+    const lose = () => {
         game.remove();
-        new p5(enter);
+        new p5(enterScore);
     };
 
-    game.preload = function() {
+    // GAME PRELOAD SETUP DRAW
+
+    game.preload = () => {
 
         shipImage = game.loadImage('../img/ship.png');
         alienImage = game.loadImage('../img/alien1.png');
@@ -197,27 +214,32 @@ let game = function(game) {
 
     }
 
-    game.setup = function() {
+    game.setup = () => {
         
         game.createCanvas(1263, 620);
         ship = new Ship();
+        shipArray.push(ship);
 
         setupAlienRow(aliens, 50);
         setupAlienRow(aliens2, 110);
+        setupAlienRow(aliens3, 170);
+        setupAlienRow(aliens4, 230);
   
     }
 
-    game.draw = function() {
+    game.draw = () => {
 
         game.background(backgroundImage, 255);
 
         game.textSize(30);
         game.fill(255, 255, 255);
-        game.text('Score: ' + score, game.width / 2.25, 30)
-
+        game.text('Score: ' + score, game.width / 2.25, 30);
  
         makeAlienRow(aliens);
-        makeAlienRow(aliens2);  
+        makeAlienRow(aliens2);
+        makeAlienRow(aliens3);
+        makeAlienRow(aliens4);
+
         ship.show();
         ship.move();
 
@@ -271,28 +293,36 @@ let game = function(game) {
             enterScore();
         }
 
+        if (ship.demo === true) {
+            console.log(shipArray.splice(0, 1));
+            if (shipArray.length === 0) {
+                lose();
+            }
+        }
+
         // GAME LOSS LOGIC
         aliensArray.forEach((row) => {
             row.forEach((alien) => {
-                if (alien.y >= game.height - 20) {
-                    enterScore();
+
+                if (alien.y >= game.height) {
+                    ship.destroy();
+                    // alien.demo = true;
+                    // loss = true;
+                    // console.log(loss)
                 }
-                if (ship.hits(alien)) {
-                    enterScore();
+
+                else if (ship.hits(alien)) {
+                    ship.destroy();
+                    // alien.demo = true;
+                    // loss = true;
+                    // console.log(loss)
                 }
+
             });
         });
-
     }
 
-//         // function mousePressed() {
-//         //     if (mouseX > 0 && mouseX < 100 && mouseY > 0 && mouseY < 100) {
-//         //     let fs = fullscreen();
-//         //     fullscreen(!fs);
-//         //     }
-//         // }
-
-    game.keyPressed = function() {
+    game.keyPressed = () => {
 
         if (game.keyCode === 32 || game.keyCode === 38 || game.keyCode === 87) { // SPACEBAR / UP / W
             let pew = new Pew(ship.x + 61, game.height - 70);
@@ -307,7 +337,7 @@ let game = function(game) {
         }
     }
 
-    game.keyReleased = function() {
+    game.keyReleased = () => {
         if (game.key != ' ' && game.keyCode != 38 && game.keyCode != 87) { // SPACEBAR / UP / W
         ship.setDir(0);
         }
@@ -315,10 +345,72 @@ let game = function(game) {
 
  }
 
-let enterScore = function(score) {
+let enterScore = (enter) => {
 
+    // const results = () => {
+    //     inpu = word.value();
+    //     console.log(inpu + ': ' + score);
+        
+    //     router.post('/scores', (req, res) => {
+    //         Scores.create(req.body, (error, scores) => {
+    //             if (error) {
+    //                 res.send(error)
+    //             } else {
+    //                 res.redirect('/scores');
+    //             }
+    //         });
+    //     });
+    // }
+
+    enter.preload = () => {
+
+        backgroundImage = enter.loadImage('../img/space.png');
+
+    }
+
+    enter.setup = () => {
+
+        enter.createCanvas(1263, 620);
+
+        // word = enter.createInput();
+        // word.id('inpu');
+        // word.position(enter.width / 2.23, enter.height / 2.25);
+
+        link = enter.createA('/scores/new', 'Submit Score');
+        scor = enter.createA('/scores', 'High Scores');
+        button = enter.createA('/play', 'Play Again');
+
+    }
+
+    enter.draw = () => {
+
+        enter.background(backgroundImage, 255);
+
+        enter.textSize(100);
+        enter.fill(255, 255, 255);
+        enter.text('Game Over!', enter.width / 3.6, enter.height / 3.5);
+
+        enter.textSize(30);
+        enter.fill(255, 255, 255);
+        enter.text('Score: ' + score, enter.width / 2.3, enter.height / 2.2); //enter.width / 2.2,
+
+        link.addClass('button');
+        link.id('spaceScoreButton');
+        link.position(enter.width / 2.465, enter.height / 1.9);
+
+        scor.addClass('button');
+        scor.id('spaceScoreButton');
+        scor.position(enter.width / 2.44, enter.height / 1.6);
+
+        button.addClass('button');
+        button.id('spacePlayButton');
+        button.position(enter.width/ 2.37, enter.height / 1.4);
+
+    }
  }
- new p5(menu);
+
+new p5(menu);
+// new p5(enterScore);
 
 
 // ADD: BUTTON TO SWITCH BETWEEN SCREENS
@@ -331,3 +423,6 @@ let enterScore = function(score) {
 
 // ADD: CUSTOM COLOR FOR PEWS OR SHIPS
 // ADD: MUSIC
+
+
+// ADD: BUTTON THAT REDIRECTS TO NEW SCORES
